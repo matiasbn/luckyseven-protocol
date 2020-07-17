@@ -14,9 +14,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -46,10 +44,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
           }
         },
         "test": {
@@ -75,9 +70,7 @@
             "outputPath": "dist/apps/contracts",
             "main": "apps/contracts/src/main.ts",
             "tsConfig": "apps/contracts/tsconfig.app.json",
-            "assets": [
-              "apps/contracts/src/assets"
-            ]
+            "assets": ["apps/contracts/src/assets"]
           },
           "configurations": {
             "production": {
@@ -107,10 +100,7 @@
               "apps/contracts/tsconfig.app.json",
               "apps/contracts/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/contracts/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/contracts/**/*"]
           }
         },
         "test": {
@@ -118,6 +108,62 @@
           "options": {
             "jestConfig": "apps/contracts/jest.config.js",
             "tsConfig": "apps/contracts/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "oracle": {
+      "root": "apps/oracle",
+      "sourceRoot": "apps/oracle/src",
+      "projectType": "application",
+      "prefix": "oracle",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/oracle",
+            "main": "apps/oracle/src/main.ts",
+            "tsConfig": "apps/oracle/tsconfig.app.json",
+            "assets": ["apps/oracle/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/oracle/src/environments/environment.ts",
+                  "with": "apps/oracle/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "oracle:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/oracle/tsconfig.app.json",
+              "apps/oracle/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/oracle/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/oracle/jest.config.js",
+            "tsConfig": "apps/oracle/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }

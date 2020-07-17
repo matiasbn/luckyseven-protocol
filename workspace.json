@@ -14,7 +14,9 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -44,7 +46,10 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**/*"
+            ]
           }
         },
         "test": {
@@ -52,6 +57,67 @@
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "tsConfig": "apps/api/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "contracts": {
+      "root": "apps/contracts",
+      "sourceRoot": "apps/contracts/src",
+      "projectType": "application",
+      "prefix": "contracts",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/contracts",
+            "main": "apps/contracts/src/main.ts",
+            "tsConfig": "apps/contracts/tsconfig.app.json",
+            "assets": [
+              "apps/contracts/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/contracts/src/environments/environment.ts",
+                  "with": "apps/contracts/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "contracts:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/contracts/tsconfig.app.json",
+              "apps/contracts/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/contracts/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/contracts/jest.config.js",
+            "tsConfig": "apps/contracts/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }

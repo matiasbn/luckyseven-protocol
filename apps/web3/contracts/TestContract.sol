@@ -2,12 +2,12 @@
 pragma solidity ^0.6.11;
 
 contract TestContract {
-  string x = '';
-    function set(string memory _newValue) public{
+  uint public x = 0;
+    function set(uint _newValue) public{
       x = _newValue;
     }
 
-  function get() public returns (string memory){
+  function get() public view returns (uint){
     return x;
   }
 }

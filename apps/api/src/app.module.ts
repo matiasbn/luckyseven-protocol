@@ -24,7 +24,8 @@ class ExtendedLogger extends Logger {
           .valid('development', 'staging', 'production')
           .default('development'),
         PRIVATE_KEY: Joi.string().required(),
-        MONGO_URI: Joi.string().required(),
+        WEB3_PROVIDER_URI: Joi.string().required(),
+        MONGODB_URI: Joi.string().required(),
         REDIS_URI: Joi.string().required(),
       }),
       validationOptions: {

@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { RouteRepository } from '../repositories/route.repository';
 import { Route } from '../domain/routes.schema';
 import { RedisService } from 'nestjs-redis';
@@ -27,17 +33,29 @@ export class ApiService {
   ) {
     this.logger.setContext('ApiService');
   }
-  async changeState(action, value = null) {
-    const privateKey = this.configService.get<string>('PRIVATE_KEY');
+
+  async getContract() {}
+
+  async getState(variable) {
     const web3 = new Web3(this.configService.get<string>('WEB3_PROVIDER_URI'));
+    const networkId = this.configService.get<string>('NETWORK_ID');
+    const contractAddress = networks[networkId].address;
+    const contract = new web3.eth.Contract(abi, contractAddress);
+    this.logger.log(`Getting state on contract address: ${contractAddress}`);
+    return await contract.methods[variable]().call();
+  }
+
+  async changeState(action, value) {
+    const web3 = new Web3(this.configService.get<string>('WEB3_PROVIDER_URI'));
+    const privateKey = this.configService.get<string>('PRIVATE_KEY');
     const networkId = await web3.eth.net.getId();
     const contractAddress = networks[networkId].address;
     this.logger.log(`Changing state on contract address: ${contractAddress}`);
-    const simpleContract = new web3.eth.Contract(abi, contractAddress);
+    const contract = new web3.eth.Contract(abi, contractAddress);
     const account = web3.eth.accounts.privateKeyToAccount(privateKey);
     const { address } = account;
-    let estimatedGas = await simpleContract.methods.set(value).estimateGas();
-    let data = simpleContract.methods.set(value).encodeABI();
+    let estimatedGas = await contract.methods[action](value).estimateGas();
+    let data = contract.methods[action](value).encodeABI();
     let setPublicValueTx = {
       from: address,
       to: contractAddress,
@@ -45,16 +63,15 @@ export class ApiService {
       data,
       chainId: 7,
     };
-    console.log(setPublicValueTx);
     switch (action) {
-      case 'set':
+      case 'algo':
+        break;
+      default:
         const signedTx = await account.signTransaction(setPublicValueTx);
         const result = await web3.eth.sendSignedTransaction(
           signedTx.rawTransaction
         );
         return result;
-        break;
-      default:
         break;
     }
     return address;
@@ -62,5 +79,9 @@ export class ApiService {
 
   async storeValue(value): Promise<any> {
     return this.changeState('set', value);
+  }
+
+  async getValue(variable): Promise<any> {
+    return this.getState(variable);
   }
 }

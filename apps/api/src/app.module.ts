@@ -25,6 +25,7 @@ class ExtendedLogger extends Logger {
           .default('development'),
         PRIVATE_KEY: Joi.string().required(),
         WEB3_PROVIDER_URI: Joi.string().required(),
+        NETWORK_ID: Joi.number().required(),
         MONGODB_URI: Joi.string().required(),
         REDIS_URI: Joi.string().required(),
       }),

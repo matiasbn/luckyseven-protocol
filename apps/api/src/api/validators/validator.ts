@@ -2,9 +2,14 @@ import { IsAlpha, IsDefined, IsNotEmpty, Length, Max } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class Value {
-  @Transform((nodes) => parseInt(nodes))
+  @Transform((value) => parseInt(value))
   @IsNotEmpty()
   readonly value: number;
+}
+
+export class Variable {
+  @IsNotEmpty()
+  readonly variable: string;
 }
 
 export class ShortestPath {

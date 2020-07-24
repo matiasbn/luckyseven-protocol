@@ -1,19 +1,12 @@
-import {
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { RouteRepository } from '../repositories/route.repository';
-import { Route } from '../domain/routes.schema';
 import { RedisService } from 'nestjs-redis';
-import { Path } from '../domain/path.schema';
 import { PathRepository } from '../repositories/path.repository';
 import Web3 from 'web3';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ConfigService } from '@nestjs/config';
+import { Envelope } from '@envelope';
 
 const { abi, networks } = JSON.parse(
   // @ts-ignore
@@ -29,7 +22,8 @@ export class ApiService {
     private readonly pathRepository: PathRepository,
     private readonly redisService: RedisService,
     private readonly configService: ConfigService,
-    private readonly logger: Logger
+    private readonly logger: Logger,
+    private readonly envelope: Envelope
   ) {
     this.logger.setContext('ApiService');
   }
@@ -83,5 +77,9 @@ export class ApiService {
 
   async getValue(variable): Promise<any> {
     return this.getState(variable);
+  }
+
+  async askForNumber(seed: string): Promise<any> {
+    return this.envelope.wrapNumber(seed);
   }
 }

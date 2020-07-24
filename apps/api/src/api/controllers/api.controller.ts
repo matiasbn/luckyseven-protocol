@@ -1,21 +1,15 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  HttpStatus,
-  Post,
-  Query,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiService } from '../services/api.service';
-import { Value, Variable } from '../validators/validator';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { SeedNumber, Value, Variable } from '../validators/validator';
 
 @Controller('luckyseven')
 export class ApiController {
   constructor(private readonly apiService: ApiService) {}
+
+  @Post('ask-for-number')
+  askForNumber(@Query() params: SeedNumber) {
+    return this.apiService.askForNumber(params.seed);
+  }
 
   @Post('store-value')
   storeValue(@Body() body: Value) {

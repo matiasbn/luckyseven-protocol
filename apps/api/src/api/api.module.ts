@@ -13,6 +13,7 @@ import * as helmet from 'helmet';
 import { PathRepository } from './repositories/path.repository';
 import { Path, PathSchema } from './domain/path.schema';
 import Web3 from 'web3';
+import { Envelope } from '@envelope';
 
 @Module({
   imports: [
@@ -22,7 +23,14 @@ import Web3 from 'web3';
     ]),
   ],
   controllers: [ApiController],
-  providers: [Logger, ApiService, PathRepository, RouteRepository, Web3],
+  providers: [
+    Logger,
+    ApiService,
+    PathRepository,
+    RouteRepository,
+    Web3,
+    Envelope,
+  ],
 })
 export class ApiModule {
   configure(consumer: MiddlewareConsumer) {

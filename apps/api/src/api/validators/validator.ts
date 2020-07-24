@@ -1,4 +1,4 @@
-import { IsAlpha, IsDefined, IsNotEmpty, Length, Max } from 'class-validator';
+import { IsNotEmpty, IsNumberString } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class Value {
@@ -12,24 +12,8 @@ export class Variable {
   readonly variable: string;
 }
 
-export class ShortestPath {
-  @Transform((origin) => origin.toUpperCase())
-  @IsAlpha()
-  @Length(1, 1)
+export class SeedNumber {
+  @IsNumberString()
   @IsNotEmpty()
-  readonly origin: string;
-
-  @Transform((destination) => destination.toUpperCase())
-  @IsAlpha()
-  @Length(1, 1)
-  @IsNotEmpty()
-  readonly destination: string;
-}
-
-export class AllPaths {
-  @Transform((origin) => origin.toUpperCase())
-  @IsAlpha()
-  @Length(1, 1)
-  @IsNotEmpty()
-  readonly origin: string;
+  readonly seed: string;
 }

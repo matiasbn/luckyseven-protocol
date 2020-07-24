@@ -11,7 +11,7 @@ import * as Joi from '@hapi/joi';
 
 class ExtendedLogger extends Logger {
   write(message: string) {
-    super.log(message.trim());
+    super.log(message.trim(), 'Morgan');
   }
 }
 

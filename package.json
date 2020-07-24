@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "dev:api": "truffle migrate --reset && nx serve api",
+    "dev:api": "truffle migrate && nx serve api",
     "build": "nx build api --assets apps/api/src/assets",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",

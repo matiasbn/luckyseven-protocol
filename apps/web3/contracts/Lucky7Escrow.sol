@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.11;
 
-contract TestContract {
+contract Lucky7Escrow {
   uint public x = 0;
     function set(uint _newValue) public{
       x = _newValue;

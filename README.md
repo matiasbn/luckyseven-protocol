@@ -3,12 +3,12 @@
 ## Protocol
 1. The user requests a random number using the API.
 Includes the parameter `` seed ``, which is a random number.
-2. The API issues an ERC-721 token with the envelope of 'seed'.
+2. The API issues an ERC-721 token with the envelope of ``seed`.
 Then the smart contract issues the events 'request number 1' and 'request number 2'.
 3. The oracle detects a 'request number 1' or a 'request number 2'
 event and publishes 1 envelope for each event detected in the token contract.
 4. Once both envelopes are published, the smart contract issues an event.
-5. The Oracle and API can then reveal the value of their envelopes in the smart contract.
+5. The Oracle and API can then revea the value of their envelopes in the smart contract.
 6. Once everything is published and accepted by the smart contract, the oracle proceeds to calculate the
 publicly verifiable random number value.
 7. The oracle publishes the value in the smart contract.

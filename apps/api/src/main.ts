@@ -14,7 +14,7 @@ async function bootstrap() {
     })
   );
   await app.listen(port, () => {
-    Logger.log('Listening at http://localhost:' + port + '/');
+    Logger.log('Listening at http://localhost:' + port + '/', 'Bootstrap');
   });
 }
 

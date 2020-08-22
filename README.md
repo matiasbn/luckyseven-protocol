@@ -14,9 +14,9 @@ publicly verifiable random number value.
 7. The oracle publishes the value in the smart contract.
 
 ## Todo
-- [ ] **Ask for a random number**. (API)
-- [ ] Catch event to generate random number.(Oracle)
-- [ ] Create ERC-721 token.(Web3)
+- [x] Ask for a random number. (API)
+- [x] Store seedEnvelope and emit event.(Web3)
+- [x] Catch event and publish testimonies.(Oracle)
 - [ ] Create luckyseven PRNG library.(Library)
 - [ ] Create WebApp for the MVP to ask for random number.(WebApp)
 
